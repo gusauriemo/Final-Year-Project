@@ -88,16 +88,12 @@ def chord_nameToNote(chordName):
     outFrequencies.remove('')
     outFrequencies = list(map(float, outFrequencies))
     return outFrequencies
-    
-#print(chord_nameToNote("E6C5C#2"))
 
 
-#returns an array with the magnitude of each note (88 notes in order)
 def whole_frequency_setter(fileName2):
     """Takes an audio file's directory as input and returns an array with the magnitude of each note.
-    88 frequency bins."""
+    I.e., 88 frequency bins."""
     samplingFrequency, signalData = wav.read(fileName2)
-    #plot.figure()
     graph = plot.magnitude_spectrum(signalData,Fs=samplingFrequency)
     y1values = graph[0]
     x1values = graph[1]
@@ -105,7 +101,6 @@ def whole_frequency_setter(fileName2):
     frequencies = x1values[:limit]
     magnitudes= y1values[:limit]
     plot.plot(x1values[:limit], y1values[:limit])
-    plot.show()
     magnitude_values = []
     array = (np.where(((frequencies/set_frequencies[0])<((2**(0.5/12)))) & ((frequencies/set_frequencies[0])>=(2-(2**(0.5/12)))), set_frequencies[0], 0)) #first note
     for i in range(88) :
@@ -117,6 +112,3 @@ def whole_frequency_setter(fileName2):
         magnitude_values.append(sum(y1values[indexes2]))
         #summing all of the magnitudes of where there is a note-match i.e., the overall magnitude for that note-bin
     return magnitude_values #ordered by notes
-
-
-#whole_frequency_setter("/Users/gustavo/Documents/Final Year Project/UMA database/UMAPiano-DB-Poly-3/UMAPiano-DB-Poly-3-A/UMAPiano-DB-Eb1A1A2-PE-M.wav")
